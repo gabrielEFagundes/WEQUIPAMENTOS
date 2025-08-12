@@ -14,7 +14,7 @@ public class InterfaceUsuario {
     public String mainMenu(){
 
         System.out.print("\n\n===============================\n" +
-                "  Sistema de Controle WEG 1.0  " +
+                "  Sistema de Controle WEG 2.0  " +
                 "\n===============================" +
                 "\n\n1 - Cadastrar Equipamento" +
                 "\n2 - Listar Equipamentos" +
