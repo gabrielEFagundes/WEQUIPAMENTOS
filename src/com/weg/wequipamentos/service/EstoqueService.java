@@ -12,10 +12,13 @@ import java.util.ArrayList;
 public class EstoqueService {
 
     List<Equipamento> equipamentos = new ArrayList<>();
+    List<String> menoresEstoques = new ArrayList<>();
     int valorFinal, contador = 0;
     int qtdMovimentada, movimentacao; // para a mov. do estoque
+    int qtdTotal, maiorQtd;
+    double maiorPreco;
     boolean valorEncontrado = false;
-    String codigoMovimentar;
+    String codigoMovimentar, equipMaiorPreco, equipMaiorQtd, equipMenorQtd;
 
     public boolean menuBack(boolean programa, int escolha, InterfaceUsuario interfaceUsuario, InterfaceErros interfaceErros, MotorEletrico motorEletrico, PainelControle painelControle){
         switch(escolha){
@@ -53,7 +56,7 @@ public class EstoqueService {
 
                 switch (valorFinal){
                 case 1:
-                    for(Equipamento valorEquipamento : equipamentos){
+                    for(Equipamento valorEquipamento : equipamentos){ // posso mudar o for depois
                         interfaceUsuario.listarTudo(contador, equipamentos);
                         contador++;
                     }
@@ -219,6 +222,39 @@ public class EstoqueService {
                     break;
                 }
             }
+
+            case 6 -> {
+                if(equipamentos.isEmpty()){
+                    interfaceErros.erroNothingRegistered();
+                    break;
+                }
+
+                char escolhaRelatorio = interfaceUsuario.relatorioEstoque();
+
+                if(escolhaRelatorio == 's' || escolhaRelatorio == 'S'){
+                    qtdTotal = equipamentos.size();
+
+                    for(Equipamento valorEquipamento : equipamentos){
+                        if(valorEquipamento.getPreco() > maiorPreco){
+                            equipMaiorPreco = valorEquipamento.getNome();
+                        }
+                        if(valorEquipamento.getQuantidade() > maiorQtd){
+                            equipMaiorQtd = valorEquipamento.getNome();
+                        }
+                        if(valorEquipamento.getQuantidade() < 5){
+                            equipMenorQtd = valorEquipamento.getNome();
+                            menoresEstoques.add(equipMenorQtd);
+                        }
+                    }
+
+                    interfaceUsuario.gerarRelatorio(qtdTotal, equipMaiorPreco, equipMaiorQtd);
+                    for(contador = 0; contador < menoresEstoques.size(); contador++) {
+                        interfaceUsuario.menoresEstoques(contador, menoresEstoques);
+                    }
+                    // TODO: resolver alguns bugs desse método
+                }
+            }
+
             case 0 -> {
                 programa = false;
                 interfaceUsuario.fecharScanner();

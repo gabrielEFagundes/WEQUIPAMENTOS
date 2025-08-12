@@ -21,6 +21,7 @@ public class InterfaceUsuario {
                 "\n3 - Pesquisar Equipamentos" +
                 "\n4 - Remover Equipamentos por Código" +
                 "\n5 - Movimentar Estoque" +
+                "\n6 - Gerar Relatório de Estoque" +
                 "\n0 - Sair" +
                 "\n\nSua opção -> ");
 
@@ -139,6 +140,30 @@ public class InterfaceUsuario {
                 "\n-> ");
 
         return scan.nextInt();
+    }
+
+    // <-- Relatórios de Estoque -->
+    public char relatorioEstoque(){
+        System.out.print("\n===============================" +
+                "\nDeseja gerar um relatório de estoque? (s/n)" +
+                "\n-> ");
+
+        return scan.next().charAt(0);
+    }
+
+    public void gerarRelatorio(int qtdTotal, String maiorPreco, String maiorQtd){
+        System.out.printf("\n===============================" +
+                "\nRELATÓRIO GERAL" +
+                "\n===============================" +
+                "\n > Total de equipamentos: %d" +
+                "\n > Maior preço: %s" +
+                "\n > Maior quantidade disponível: %s" +
+                "\n > Equipamentos com menores estoques:\n",
+                qtdTotal, maiorPreco, maiorQtd);
+    }
+
+    public void menoresEstoques(int contador, List<String> menoresEstoques){
+        System.out.println(menoresEstoques.get(contador));
     }
 
     // <-- Finalizacao -->
